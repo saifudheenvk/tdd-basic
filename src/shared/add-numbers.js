@@ -1,9 +1,10 @@
+import { BadRequestError } from "../test/error-handler";
 
 
 export class AddNumbers {
     addNumbers(numberString) {
         if(!numberString) {
-            throw new Error("numberString is required");
+            return 0;
         }
         const parsedNumbers = this.parseNumberString(numberString);
         this.validateNumber(parsedNumbers);
@@ -24,7 +25,7 @@ export class AddNumbers {
     validateNumber(numbers) {
         const negatives = numbers.filter(num => parseInt(num) < 0);
         if(negatives.length > 0) {
-            throw new Error("negative numbers not allowed: " + negatives.join(', '));
+            throw new BadRequestError("negative numbers not allowed: " + negatives.join(', '));
         }
     }
 }

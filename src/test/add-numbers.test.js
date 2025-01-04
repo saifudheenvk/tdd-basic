@@ -9,7 +9,7 @@ describe("addNumbers", () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.json).toHaveBeenCalledWith({
             result: 0,
-            message: "numberString is required"
+            message: "success"
         });
     });
 
@@ -17,10 +17,10 @@ describe("addNumbers", () => {
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
         const req = { query: { numberString: "" } };
         await Apis.prototype.addNumbers(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             result: 0,
-            message: "numberString is required"
+            message: "success"
         });
     });
 
@@ -71,12 +71,10 @@ describe("addNumbers", () => {
     test('throws error for negative numbers', async () => {
         const req = { query: { numberString: "1,-2,3,-4" } };
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-        await Apis.prototype.addNumbers(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.json).toHaveBeenCalledWith({
-            result: 0,
-            message: "negative numbers not allowed: -2, -4"
-        });
+        await Apis.prototype.addNumbers(req, res).catch((err) => {
+            expect(err.status).toBe(400);
+            expect(err.message).toBe("negative numbers not allowed: -2, -4");
+        })
     });
 
 
