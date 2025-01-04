@@ -1,4 +1,4 @@
-import { Apis } from "../controller";
+const Apis = require("../controller");
 
 
 

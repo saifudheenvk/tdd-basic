@@ -1,12 +1,13 @@
-import { AppRouter } from './router';
-import { CustomError } from './test/error-handler';
 
+const AppRouter  = require("./router")
+const { CustomError } = require("./shared/error-handler")
+const HTTP_STATUS = require('http-status-codes');
 const express = require('express');
-
+const cors = require('cors');
 
 const SERVER_PORT = 3001;
 
-export class Server {
+class Server {
     constructor(app) {
         this.app = app;
         this.app.use(express.json());
@@ -42,3 +43,5 @@ export class Server {
       }
 
 }
+
+module.exports = Server

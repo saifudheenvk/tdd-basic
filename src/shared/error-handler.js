@@ -1,7 +1,7 @@
-import HTTP_STATUS from 'http-status-codes';
+const HTTP_STATUS = require('http-status-codes');
 
 
-export class CustomError extends Error {  
+class CustomError extends Error {  
     constructor(message) {
       super(message);
     }
@@ -14,7 +14,7 @@ export class CustomError extends Error {
     }
   }
 
-  export class BadRequestError extends CustomError {
+  class BadRequestError extends CustomError {
     status = HTTP_STATUS.BAD_REQUEST;
   
     constructor(message) {
@@ -22,10 +22,16 @@ export class CustomError extends Error {
     }
   }
 
-  export class ServerError extends CustomError {
+  class ServerError extends CustomError {
     status = HTTP_STATUS.SERVICE_UNAVAILABLE;
   
     constructor(message) {
       super(message);
     }
+  }
+
+  module.exports = {
+    CustomError,
+    BadRequestError,
+    ServerError
   }

@@ -1,4 +1,5 @@
 const express = require('express');
+const Apis = require('../controller');
 
 class AppRouter {
     constructor() {
@@ -9,9 +10,9 @@ class AppRouter {
         this.router.get('/api', (req, res) => {
             res.json({ message: 'Hello from server!' });
         });
-        this.router.get('/add-numbers', Apis.prototype.addNumbers);
+        this.router.get('/api/add-numbers', Apis.prototype.addNumbers);
         return this.router;
     }
 }
 
-export { AppRouter }
+module.exports = AppRouter

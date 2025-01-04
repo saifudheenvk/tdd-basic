@@ -1,7 +1,7 @@
-import { BadRequestError } from "../test/error-handler";
+const { BadRequestError } = require("./error-handler");
 
 
-export class AddNumbers {
+ class AddNumbers {
     addNumbers(numberString) {
         if(!numberString) {
             return 0;
@@ -29,3 +29,5 @@ export class AddNumbers {
         }
     }
 }
+
+module.exports = AddNumbers

@@ -1,12 +1,13 @@
 const express = require('express');
-const { Server } = require('./server');
+const Server = require('./server');
 
 
 class Application {
 
+
     initialise() {
         this.app = express();
-        const server = new Server();
+        const server = new Server(this.app);
         server.start()
     }
 }
