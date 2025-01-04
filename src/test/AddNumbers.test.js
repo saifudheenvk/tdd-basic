@@ -59,4 +59,15 @@ describe("addNumbers", () => {
         });
     });
 
+    test('throws error for negative numbers', async () => {
+        const req = { query: { numberString: "1,-2,3,-4" } };
+        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+        await Apis.prototype.addNumbers(req, res);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 0,
+            message: "negative numbers not allowed: -2, -4"
+        });
+    });
+
+
 });
