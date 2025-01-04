@@ -7,11 +7,10 @@ export class AddNumbers {
         }
         const parsedNumbers = this.parseNumberString(numberString);
         const total = parsedNumbers.reduce((total, number) => total + parseInt(number), 0);
-        console.log(total);
         return total;
     }
 
     parseNumberString(numberString) {
-        return numberString.split(",");
+        return numberString.split(/[\n,]/);
     }
 }

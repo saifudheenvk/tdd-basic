@@ -30,22 +30,32 @@ describe("addNumbers", () => {
     });
 
     test('returns the number for a comma seperated number string', async () => {
-        const req = { query: { numberString: "1,6" } };
+        const req = { query: { numberString: "1,5" } };
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 7
+            result: 6
         });
     });
 
     test('returns the number for a comma seperated number string', async () => {
-        const req = { query: { numberString: "1,6\n7" } };
+        const req = { query: { numberString: "1\n2,3" } };
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 14
+            result: 6
+        });
+    });
+
+    test('supports different delimiters', async () => {
+        const req = { query: { numberString: "//;\n1;2" } };
+        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+        await Apis.prototype.addNumbers(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 3
         });
     });
 
