@@ -1,6 +1,7 @@
 
-const addNumbers = (numberString) => {
-    
-}
 
-module.exports = { addNumbers };
+export class AddNumbers {
+    addNumbers(numberString) {
+        
+    }
+}

@@ -1,21 +1,15 @@
 const express = require('express');
-const cors = require('cors');
+const { Server } = require('./server');
 
-const app = express();
 
-app.use(express.json());
-app.use(cors());
+class Application {
 
-app.get('/api', (req, res) => {
-    res.json({ message: 'Hello from server!' });
-});
+    initialise() {
+        this.app = express();
+        const server = new Server();
+        server.start()
+    }
+}
 
-app.get('/add-numbers', (req, res) => {
-    const { numberString } = req.query;
-    const result = addNumbers(numberString);
-    res.json({ result });
-});
-
-app.listen(3001, () => {
-    console.log('Server is running on port 3001');
-});
+const application = new Application();
+application.initialise();
