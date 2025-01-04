@@ -39,6 +39,14 @@ describe("addNumbers", () => {
         });
     });
 
-    
+    test('returns the number for a comma seperated number string', async () => {
+        const req = { query: { numberString: "1,6\n7" } };
+        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+        await Apis.prototype.addNumbers(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 14
+        });
+    });
 
 });
