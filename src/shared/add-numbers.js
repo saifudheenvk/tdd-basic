@@ -6,6 +6,7 @@ export class AddNumbers {
             throw new Error("numberString is required");
         }
         const parsedNumbers = this.parseNumberString(numberString);
+        this.validateNumber(parsedNumbers);
         const total = parsedNumbers.reduce((total, number) => total + parseInt(number), 0);
         return total;
     }
@@ -20,5 +21,10 @@ export class AddNumbers {
         return numberString.split(delimitter).filter(number => number!== '');
     }
 
-
+    validateNumber(numbers) {
+        const negatives = numbers.filter(num => parseInt(num) < 0);
+        if(negatives.length > 0) {
+            throw new Error("negative numbers not allowed: " + negatives.join(', '));
+        }
+    }
 }

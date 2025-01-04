@@ -8,7 +8,8 @@ describe("addNumbers", () => {
     test("function should return result 0 if empty string passed", async () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.json).toHaveBeenCalledWith({
-            result: 0
+            result: 0,
+            message: "numberString is required"
         });
     });
 
@@ -17,6 +18,10 @@ describe("addNumbers", () => {
         const req = { query: { numberString: "" } };
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 0,
+            message: "numberString is required"
+        });
     });
 
     test('returns the number for a single number string', async () => {
@@ -25,7 +30,8 @@ describe("addNumbers", () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 1
+            result: 1,
+            message: 'success'
         });
     });
 
@@ -35,7 +41,8 @@ describe("addNumbers", () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 6
+            result: 6,
+            message: 'success'
         });
     });
 
@@ -45,7 +52,8 @@ describe("addNumbers", () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 6
+            result: 6,
+            message: 'success'
         });
     });
 
@@ -55,7 +63,8 @@ describe("addNumbers", () => {
         await Apis.prototype.addNumbers(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            result: 3
+            result: 3,
+            message: 'success'
         });
     });
 
@@ -63,6 +72,7 @@ describe("addNumbers", () => {
         const req = { query: { numberString: "1,-2,3,-4" } };
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
         await Apis.prototype.addNumbers(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
             result: 0,
             message: "negative numbers not allowed: -2, -4"
