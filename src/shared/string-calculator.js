@@ -1,14 +1,20 @@
 const { BadRequestError } = require("./error-handler");
 
 
- class AddNumbers {
-    addNumbers(numberString) {
+ class StringCalculator {
+    calculateString(numberString) {
         if(!numberString) {
             return 0;
         }
-        const parsedNumbers = this.parseNumberString(numberString);
+        const {parsedNumbers, delimitter} = this.parseNumberString(numberString);
         this.validateNumber(parsedNumbers);
-        const total = parsedNumbers.reduce((total, number) => total + parseInt(number), 0);
+        const total = parsedNumbers.reduce((total, number) => {
+            if(delimitter === '*') {
+                return total * number;
+            } else {
+                return total + number
+            }
+        });
         return total;
     }
 
@@ -19,7 +25,10 @@ const { BadRequestError } = require("./error-handler");
             numberString = parts[1];
             delimitter = parts[0].slice(2);
         }
-        return numberString.split(delimitter).filter(number => number!== '');
+        return {
+            delimitter,
+            parsedNumbers: numberString.split(delimitter).filter(number => number!== '').map(number => parseInt(number.trim()))
+        };
     }
 
     validateNumber(numbers) {
@@ -30,4 +39,4 @@ const { BadRequestError } = require("./error-handler");
     }
 }
 
-module.exports = AddNumbers
+module.exports = StringCalculator

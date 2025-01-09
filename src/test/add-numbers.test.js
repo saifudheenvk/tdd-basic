@@ -57,6 +57,7 @@ describe("addNumbers", () => {
         });
     });
 
+    // //*\n2*3 should return 6
     test('supports different delimiters', async () => {
         const req = { query: { numberString: "//;\n1;2" } };
         const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
@@ -67,6 +68,18 @@ describe("addNumbers", () => {
             message: 'success'
         });
     });
+
+    test('if delimiters is * then return multiplied result', async () => {
+        const req = { query: { numberString: "//*\n2*3" } };
+        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+        await Apis.prototype.addNumbers(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 6,
+            message: 'success'
+        });
+    });
+
 
     test('throws error for negative numbers', async () => {
         const req = { query: { numberString: "1,-2,3,-4" } };
